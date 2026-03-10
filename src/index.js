@@ -8,7 +8,15 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send("API ToDo funcionando, sin problemas... :)");
+  res.json({
+    message: "API ToDo funcionando 🚀 :)"
+  });
+});
+
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Endpoint no encontrado"
+  });
 });
 
 const PORT = process.env.PORT || 3000;
