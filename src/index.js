@@ -5,6 +5,7 @@ require("dotenv").config();
 const { testConnection } = require("./db/connection");
 const authRoutes = require("./routes/auth.routes");
 const categoryRoutes = require("./routes/category.routes");
+const tagRoutes = require("./routes/tag.routes");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/auth", authRoutes);
 app.use("/categories", categoryRoutes);
+app.use("/tags", tagRoutes);
 
 app.get("/", (req, res) => {
   res.json({
