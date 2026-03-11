@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const { testConnection } = require("./db/connection");
+
 const app = express();
 
 app.use(cors());
@@ -12,6 +14,8 @@ app.get("/", (req, res) => {
     message: "API ToDo funcionando 🚀 :)"
   });
 });
+
+testConnection();
 
 app.use((req, res) => {
   res.status(404).json({
