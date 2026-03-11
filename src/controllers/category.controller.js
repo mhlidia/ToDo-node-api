@@ -8,6 +8,12 @@ const {
 async function createCategory(req, res, next) {
   const { name, user_id } = req.body;
 
+  if (!name || !user_id) {
+    return res.status(400).json({
+      message: "name y user_id son obligatorios"
+    });
+  }
+
   const id = uuidv4();
 
   const query = `
@@ -23,7 +29,15 @@ async function createCategory(req, res, next) {
 }
 
 async function getCategories(req, res, next) {
-  const [rows] = await pool.query("SELECT * FROM categories");
+  const { user_id } = req.query;
+
+  if (!user_id) {
+    return res.status(400).json({
+      message: "user_id es obligatorio"
+    });
+  }
+
+  const [rows] = await pool.query("SELECT * FROM categories WHERE user_id = ?", [user_id]);
 
   res.json(categoriesDecorator(rows));
 }
