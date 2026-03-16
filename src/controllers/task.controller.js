@@ -1,12 +1,8 @@
 const { v4: uuidv4 } = require("uuid");
 const { pool } = require("../db/connection");
-const {
-  taskDecorator,
-  tasksDecorator
-} = require("../decorators/task.decorator");
+const {tasksDecorator} = require("../decorators/task.decorator");
 
-/* crear tarea */
-async function createTask(req, res) {
+const store = async (req, res) => {
   const { title, description, status, category_id, user_id, tags } = req.body;
 
   if (!title || !user_id) {
@@ -46,8 +42,7 @@ async function createTask(req, res) {
   });
 }
 
-/* listar tareas */
-async function getTasks(req, res) {
+const index = async (req, res) => {
   const { user_id } = req.query;
 
   if (!user_id) {
@@ -76,8 +71,7 @@ async function getTasks(req, res) {
   res.json(tasksDecorator(rows));
 }
 
-/* actualizar tarea */
-async function updateTask(req, res) {
+const update = async (req, res) => {
   const { id } = req.params;
   const { title, description, status, category_id, tags } = req.body;
 
@@ -119,8 +113,7 @@ async function updateTask(req, res) {
   });
 }
 
-/* eliminar tarea */
-async function deleteTask(req, res) {
+const destroy = async (req, res) => {
   const { id } = req.params;
 
   await pool.query(
@@ -134,8 +127,8 @@ async function deleteTask(req, res) {
 }
 
 module.exports = {
-  createTask,
-  getTasks,
-  updateTask,
-  deleteTask
+  store,
+  index,
+  update,
+  destroy
 };

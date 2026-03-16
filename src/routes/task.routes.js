@@ -2,17 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const asyncHandler = require("../utils/asyncHandler");
+const tasksController = require("../controllers/task.controller");
 
-const {
-  createTask,
-  getTasks,
-  updateTask,
-  deleteTask
-} = require("../controllers/task.controller");
-
-router.post("/", asyncHandler(createTask));
-router.get("/", asyncHandler(getTasks));
-router.put("/:id", asyncHandler(updateTask));
-router.delete("/:id", asyncHandler(deleteTask));
+router.post("/", asyncHandler(tasksController.store));
+router.get("/", asyncHandler(tasksController.index));
+router.put("/:id", asyncHandler(tasksController.update));
+router.delete("/:id", asyncHandler(tasksController.destroy));
 
 module.exports = router;
