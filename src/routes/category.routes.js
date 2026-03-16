@@ -2,17 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const asyncHandler = require("../utils/asyncHandler");
+const categoryController = require("../controllers/category.controller");
 
-const {
-  createCategory,
-  getCategories,
-  updateCategory,
-  deleteCategory
-} = require("../controllers/category.controller");
-
-router.post("/", asyncHandler(createCategory));
-router.get("/", asyncHandler(getCategories));
-router.put("/:id", asyncHandler(updateCategory));
-router.delete("/:id", asyncHandler(deleteCategory));
+router.get("/", asyncHandler(categoryController.index));
+router.post("/", asyncHandler(categoryController.store));
+router.put("/:id", asyncHandler(categoryController.update));
+router.delete("/:id", asyncHandler(categoryController.destroy));
 
 module.exports = router;
