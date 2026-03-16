@@ -1,12 +1,8 @@
 const { v4: uuidv4 } = require("uuid");
 const { pool } = require("../db/connection");
-const {
-  tagDecorator,
-  tagsDecorator
-} = require("../decorators/tag.decorator");
+const {tagsDecorator} = require("../decorators/tag.decorator");
 
-/* crear tag */
-async function createTag(req, res) {
+const store = async (req, res) => {
   const { name, color, user_id } = req.body;
 
   if (!name || !user_id) {
@@ -27,10 +23,9 @@ async function createTag(req, res) {
   res.status(201).json({
     message: "Etiqueta creada correctamente"
   });
-}
+};
 
-/* listar tags */
-async function getTags(req, res) {
+const index = async (req, res) => {
   const { user_id } = req.query;
 
   if (!user_id) {
@@ -44,8 +39,7 @@ async function getTags(req, res) {
   res.json(tagsDecorator(rows));
 }
 
-/* actualizar tag */
-async function updateTag(req, res) {
+const update = async (req, res) => {
   const { id } = req.params;
   const { name, color } = req.body;
 
@@ -68,8 +62,7 @@ async function updateTag(req, res) {
   });
 }
 
-/* eliminar tag */
-async function deleteTag(req, res) {
+const destroy = async (req, res) => {
   const { id } = req.params;
 
   await pool.query(
@@ -83,8 +76,8 @@ async function deleteTag(req, res) {
 }
 
 module.exports = {
-  createTag,
-  getTags,
-  updateTag,
-  deleteTag
+  store,
+  index,
+  update,
+  destroy
 };

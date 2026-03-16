@@ -2,17 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const asyncHandler = require("../utils/asyncHandler");
+const tagController = require("../controllers/tag.controller");
 
-const {
-  createTag,
-  getTags,
-  updateTag,
-  deleteTag
-} = require("../controllers/tag.controller");
-
-router.post("/", asyncHandler(createTag));
-router.get("/", asyncHandler(getTags));
-router.put("/:id", asyncHandler(updateTag));
-router.delete("/:id", asyncHandler(deleteTag));
+router.get("/", asyncHandler(tagController.index));
+router.post("/", asyncHandler(tagController.store));
+router.put("/:id", asyncHandler(tagController.update));
+router.delete("/:id", asyncHandler(tagController.destroy));
 
 module.exports = router;
